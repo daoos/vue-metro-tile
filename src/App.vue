@@ -1,24 +1,13 @@
 <template>
   <div id="app">
-    <div>
-      <img width="120" height="120" src="https://user-images.githubusercontent.com/6414178/45662644-3a441000-bb35-11e8-8e72-e6ed618a733d.png">
-    </div>
-    <div class="title">
-      Vue Metro Tile
-    </div>
-    <div class="subtitle">
-      *click to animate or drag to rearrange
-    </div>
-
-    <div class="grid-layout-container margin-right">
+    <div class="grid-layout-containert">
       <grid-layout
+                  ref="layout1"
                   :layout="layoutLeft"
                   :col-num="6"
-                  :colWidth="BASE_LEN"
-                  :row-height="BASE_LEN"
-                  :is-draggable="true"
+                  :is-draggable="false"
                   :is-resizable="false"
-                  :is-mirrored="false"
+                  :is-mirrored="true"
                   :vertical-compact="true"
                   :margin="[0, 0]"
                   :use-css-transforms="true"
@@ -31,74 +20,14 @@
                    :i="item.i"
                    :key="item.i">
           <div class="container">
-            <MetroTile 
-                :width="item.width"
-                :height="item.height"
+            <MetroTile
+                :width="item.w*(gridLayoutWidth/6)"
+                :height="item.h*(gridLayoutHeight)"
                 :length="item.length"
                 :rotateX="item.rotateX"
                 :faceStyle="item.faceStyle">
               <!-- custom face for each tile in left layout-->
-              <template v-if="item.i === '0'">
-                <div slot="front">
-                    <EdgeIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      Microsoft Edge
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '1'">
-                <div slot="front">
-                    <XboxIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      Xbox
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '2'">
-                <div slot="front">
-                    <OfficeIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      My Office
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '3'">
-                <div slot="front">
-                    <OneNoteIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      OneNote
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '4'">
-                <div slot="front">
-                    <PowerPointIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      PowerPoint
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '5'">
-                <div slot="front">
-                    <CortanaIcon style="fill: white" class="icon" />
-                    <div class="tile-label">
-                      Cortana
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '6'">
-                <div slot="front">
-                    <div class="calendar">
-                      <div class="calendar-week-day">
-                        {{weekDay}}
-                      </div>
-                      <div class="calendar-month-day">
-                        {{monthDay}}
-                      </div>
-                    </div>
-                </div>
-              </template>
-              <template v-else-if="item.i === '7'">
+              <template >
                 <div slot="front">
                     <div class="tile-label">
                       Microsoft Store
@@ -144,120 +73,6 @@
         </grid-item>
       </grid-layout>
     </div>
-
-    <div class="grid-layout-container">
-      <grid-layout
-                  :layout="layoutRight"
-                  :col-num="6"
-                  :colWidth="BASE_LEN"
-                  :row-height="BASE_LEN"
-                  :is-draggable="true"
-                  :is-resizable="false"
-                  :is-mirrored="false"
-                  :vertical-compact="true"
-                  :margin="[0, 0]"
-                  :use-css-transforms="true"
-      >
-        <grid-item v-for="item in layoutRight"
-                   :x="item.x"
-                   :y="item.y"
-                   :w="item.w"
-                   :h="item.h"
-                   :i="item.i"
-                   :key="item.i">
-          <div class="container">
-            <MetroTile 
-                :width="item.width"
-                :height="item.height"
-                :length="item.length"
-                :rotateX="item.rotateX"
-                :faceStyle="item.faceStyle"
-                :frontStyle="item.frontStyle"
-                :topStyle="item.topStyle"
-                :backStyle="item.backStyle"
-                :bottomStyle="item.bottomStyle"
-                :perspective="item.perspective"
-                v-on="item.i === '5' ? {click: redirect} : {}">
-              <!-- custom face for each tile in right layout-->
-              <template v-if="item.i === '0'">
-                <div slot="front">
-                  <WeatherIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '1'">
-                <div slot="front">
-                  <SettingsIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '2'">
-                <div slot="front">
-                  <PhotoIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '3'">
-                <div slot="front">
-                  <CameraIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '4'">
-                <div slot="front">
-                  <div class="tile-label">
-                    Excel
-                  </div>
-                  <ExcelIcon class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '5'">
-                <div slot="front">
-                  <div class="tile-label">
-                    View Source on GitHub
-                  </div>
-                  <GithubIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '6'">
-                <div slot="front">
-                  <div class="tile-label">
-                    Vue
-                  </div>
-                  <img src="https://user-images.githubusercontent.com/6414178/45696077-51b2e580-bb95-11e8-91ab-097cc1d1b89d.png" class="image" />
-                </div>
-                <div slot="top">
-                  <div class="tile-label">
-                    Angular
-                  </div>
-                  <img src="./assets/angular.png" class="image" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '7'">
-                <div slot="front">
-                  <div class="tile-label">
-                    Groove Music
-                  </div>
-                  <GrooveIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '8'">
-                <div slot="front">
-                  <div class="tile-label">
-                    Google Chrome
-                  </div>
-                  <ChromeIcon class="icon" />
-                </div>
-              </template>
-              <template v-else-if="item.i === '9'">
-                <div slot="front">
-                  <div class="tile-label">
-                    Access
-                  </div>
-                  <AccessIcon style="fill: white" class="icon" />
-                </div>
-              </template>
-            </MetroTile>
-          </div>
-        </grid-item>
-      </grid-layout>
-    </div>
   </div>
 </template>
 
@@ -281,7 +96,7 @@ import GrooveIcon from './assets/groove.svg';
 import ChromeIcon from './assets/chrome.svg';
 import AccessIcon from './assets/access.svg';
 
-const BASE_LEN = 65;
+const BASE_LEN = 100;
 const MARGIN = 3;
 const REPO_URL = 'https://github.com/yuanfux/vue-metro-tile';
 
@@ -308,6 +123,8 @@ export default {
     AccessIcon
   },
   data: () => ({
+      gridLayoutWidth:100,
+      gridLayoutHeight:100,
     BASE_LEN,
     layoutLeft: [
       {
@@ -316,8 +133,6 @@ export default {
         w: 4,
         h: 2,
         i: "0",
-        width: BASE_LEN*4 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#1E90FF'
@@ -329,8 +144,6 @@ export default {
         w: 4,
         h: 2,
         i: "1",
-        width: BASE_LEN*4 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#228b22'
@@ -342,8 +155,6 @@ export default {
         w: 4,
         h: 2,
         i: "2",
-        width: BASE_LEN*4 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#ff4500'
@@ -355,8 +166,6 @@ export default {
         w: 2,
         h: 2,
         i: "3",
-        width: BASE_LEN*2 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#9400d3'
@@ -368,8 +177,6 @@ export default {
         w: 2,
         h: 2,
         i: "4",
-        width: BASE_LEN*2 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#ffa07a'
@@ -381,8 +188,6 @@ export default {
         w: 2,
         h: 2,
         i: "5",
-        width: BASE_LEN*2 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#1E90FF'
@@ -394,8 +199,6 @@ export default {
         w: 2,
         h: 2,
         i: "6",
-        width: BASE_LEN*2 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#1E90FF'
@@ -407,8 +210,6 @@ export default {
         w: 4,
         h: 2,
         i: "7",
-        width: BASE_LEN*4 - MARGIN*2,
-        height: BASE_LEN*2 - MARGIN*2,
         rotateX: 0,
         faceStyle: {
           'background-color': '#1E90FF'
@@ -572,9 +373,9 @@ export default {
     monthDay: (() => {
       return new Date().getDate();
     })(),
-    rotateIndex1: 0,  
-    rotateArray1: [-90, 90, 90, -90],  
-    rotateIndex2: 0,  
+    rotateIndex1: 0,
+    rotateArray1: [-90, 90, 90, -90],
+    rotateIndex2: 0,
     rotateArray2: [-90, 90],
   }),
   methods: {
@@ -588,6 +389,7 @@ export default {
     }
   },
   mounted() {
+
     this.interval1 = setInterval(
       () => {
         this.setRotateX(this.layoutLeft[7], 'rotateIndex1', this.rotateArray1);
@@ -596,6 +398,11 @@ export default {
       () => {
         this.setRotateX(this.layoutRight[6], 'rotateIndex2', this.rotateArray2);
       }, 5000);
+      setTimeout(()=>{
+          // this.gridLayoutWidth=this.$refs.layout1.rowHeight
+          this.gridLayoutWidth=this.$refs.layout1.width-6
+          this.gridLayoutHeight=this.$refs.layout1.rowHeight
+  }, 300);
   },
   beforeDestroy() {
     clearInterval(this.interval1);
@@ -635,7 +442,7 @@ body {
 
 .grid-layout-container {
   display: inline-block;
-  width: 390px;
+  width: 100%;
   height: 100%;
 }
 
@@ -678,20 +485,20 @@ body {
 
 .store-cover-img {
   position: absolute;
-  left: 8px;
+  left: 18px;
   top: 10px;
-  height: 50px;
-  width: 50px;
+  height: 200px;
+  width: 200px;
 }
 
 .store-title {
   font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-  font-size: 17px;
+  font-size: 36px;
   font-weight: 400;
   color: #fff;
   position: absolute;
   top: 10px;
-  left: 65px;
+  left: 200px;
 }
 
 .store-subtitle {
@@ -706,7 +513,7 @@ body {
 
 .tile-label {
   font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 500;
   color: #fff;
   position: absolute;

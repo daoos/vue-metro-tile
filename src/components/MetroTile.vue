@@ -33,7 +33,8 @@
       <div :class="{ripple: isAnimating }" :style="clickGlareStyle" @animationend="resetAnimation">
       </div>
     </div>
-  </div>
+  </div
+           >
 </template>
 
 <script>
@@ -118,8 +119,8 @@ export default {
       return {
         position: 'relative',
         cursor: 'pointer',
-        width: `${this.width}px`,
-        height: `${this.height}px`,
+          width: `100%`,
+          height: `100%`,
         perspective: `${this.perspective}px`,
         overflow: 'hidden',
         'background-color': 'rgba(153,153,153,0.3)'
@@ -167,7 +168,7 @@ export default {
         opacity: this.isHover ? this.hoverGlareOpacity : 0,
         'transform-style': 'preserve-3d',
         // 'will-change': 'transform'
-      } 
+      }
     },
     clickGlareStyle: function() {
       const glareScaledsize = this.clickGlareSize * this.glareScale;
@@ -281,7 +282,7 @@ export default {
     },
 
     onMouseUp(event) {
-      // only emit click when mousedown and mouseup 
+      // only emit click when mousedown and mouseup
       // are at the same position
       if (
         this.mouseDownX === event.pageX &&
@@ -338,7 +339,7 @@ export default {
       this.isAnimating = false;
     },
 
-    // trigger glare effect when hovering 
+    // trigger glare effect when hovering
     hoverGlare(relativePos) {
       this.isHover = true;
       this.hoverX = relativePos.x;
@@ -349,7 +350,13 @@ export default {
     setMouseDown(state) {
       this.isMouseDown = state;
     }
-  }
+  },
+    mounted() {
+        setTimeout(()=>{
+            this.width=this.$refs.scene.width
+            this.height=this.$refs.scene.height
+        }, 300);
+    },
 }
 </script>
 
